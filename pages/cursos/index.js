@@ -1,14 +1,15 @@
 import Pagina from "@/components/Pagina";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
+import { OverlayTrigger, Table, Tooltip } from "react-bootstrap";
 import { CgFolderRemove } from 'react-icons/cg'
 
 export default function Home() {
   const [cursos, setCursos] = useState([])
+
   useEffect(() => {
     setCursos(getAll())
-  }, [])
+  })
 
   function getAll() {
     return JSON.parse(window.localStorage.getItem("Cursos")) ?? []
@@ -16,10 +17,8 @@ export default function Home() {
 
   function removeItem(iditem) {
     const storage = getAll()
-    storage.slice(iditem,1)
-    /* window.localStorage.setItem("Cursos",storage) */
-
-
+    storage.splice(iditem,1)
+    window.localStorage.setItem("Cursos",JSON.stringify(storage)) 
   }
 
 
@@ -43,7 +42,12 @@ export default function Home() {
               cursos.map((item, index) => (
                 <tr key={index}>
                   <td>
+                  <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Remover curso</Tooltip>}>
+                    <span className="d-inline-block">
                     <CgFolderRemove onClick={() => removeItem(index)} />
+
+                    </span>
+                  </OverlayTrigger>
                   </td>
                   <td>{item.Nome}</td>
                   <td>{item.Duracao}</td>

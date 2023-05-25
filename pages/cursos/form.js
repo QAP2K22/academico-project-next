@@ -2,7 +2,7 @@ import Pagina from '@/components/Pagina'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react'
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, InputGroup, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
@@ -10,31 +10,30 @@ import { useForm } from 'react-hook-form';
 const form = () => {
 
     const { push } = useRouter()
-    const { register, handleSubmit } = useForm()
-    
-    const cursos = []
+    const { register, handleSubmit, formState: { errors } } = useForm();
+
     function Enviar(dados) {
-        console.log("teste")
+        const cursos = JSON.parse(window.localStorage.getItem("Cursos")) ?? []
         cursos.push(dados)
         window.localStorage.setItem("Cursos", JSON.stringify(cursos))
-/*         push("/cursos")
- */    }
+        push("/cursos")
+    }
 
     return (
         <>
             <Pagina titulo="Cursos" title="QaSchool" navBarLink="/cursos">
-                <Form>
+                <Form onSubmit={handleSubmit(Enviar)}>
                     <Row>
                         <Col>
                             <Form.Group className="mb-3" controlId="Nome">
                                 <Form.Label>Nome</Form.Label>
-                                <Form.Control type="text" placeholder="First name"  {...register('Nome')} />
+                                <Form.Control type="text" placeholder="Nome do curso"  {...register('Nome')} />
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group className="mb-3" controlId="Duracao">
                                 <Form.Label>Duração</Form.Label>
-                                <Form.Control placeholder="Duração" {...register('Duracao')} />
+                                <Form.Control placeholder="Duração do curso" {...register('Duracao')} />
                             </Form.Group>
                         </Col>
 
@@ -52,9 +51,20 @@ const form = () => {
 
                     <Form.Group className="mb-3 mt-2" controlId="formGridAddress1">
                         <Form.Label>Endereço de e-mail</Form.Label>
-                        <Form.Control placeholder="1234 Main St" {...register('Email')} />
+                        <InputGroup hasValidation>
+                            <Form.Control type="text" placeholder="qaschool@qaschool.com" required {...register('Email', {
+                                validate: (value) => value.length > 2
+                            })}
+                            />
+
+                            {errors.Email && <Form.Control.Feedback type="invalid">
+                                Você precisa inserir um e-mail válido!
+                            </Form.Control.Feedback>}
+                        </InputGroup>
+
+
                     </Form.Group>
-                    <Button className="btn btn-primary" onclick={handleSubmit(Enviar)}>Enviar</Button>
+                    <Button className="btn btn-primary" onClick={handleSubmit(Enviar)}>Enviar</Button>
                 </Form>
             </Pagina>
         </>

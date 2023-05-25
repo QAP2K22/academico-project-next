@@ -42,80 +42,11 @@ const dynamicNavBar = {
     },
     {
       type: "simple",
-      text: "semestres",
+      text: "Semestes",
       href: "/semestres"
     },
-  ],
-
-  "films": [
-    {
-      type: "simple",
-      text: "Atores",
-      href: "/atores"
-    },
-
-    {
-      type: "simple",
-      text: "Gêneros",
-      href: "/generos"
-    },
-
-    {
-      type: "dropdown",
-      text: "Séries",
-      values: [
-        {
-          text: "Populares",
-          href: "/series/populares"
-        },
-        {
-          text: "No Ar",
-          href: "/series/noar"
-        },
-        {
-          text: "Estreantes",
-          href: "/series/estreantes"
-        },
-        {
-          text: "Top Rated",
-          href: "/series/uprated"
-        }
-      ]
-    },
-
-    {
-      type: "dropdown",
-      text: "Filmes",
-      values: [
-        {
-          text: "Populares",
-          href: "/films/populares"
-        },
-        {
-          text: "Lançamentos",
-          href: "/films/lancamentos"
-        },
-        {
-          text: "Em cartaz",
-          href: "/films/emcartaz"
-        },
-        {
-          text: "Top Rated",
-          href: "/films/toprated"
-        }
-      ]
-    },
-
-    {
-      type: "seach",
-      active: true,
-      text: "qap",
-      href: ""
-    },
-
   ]
 }
-
 
 
 const Pagina = (props) => {
