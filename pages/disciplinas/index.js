@@ -5,26 +5,15 @@ import { OverlayTrigger, Table, Tooltip } from "react-bootstrap";
 import { CgFolderRemove, CgPen } from 'react-icons/cg'
 
 export default function Home() {
-  const [cursos, setCursos] = useState([])
+  const [disciplinas, setDisciplinas] = useState([])
 
   useEffect(() => {
-    setCursos(getAll())
   }, [])
-
-  function getAll() {
-    return JSON.parse(window.localStorage.getItem("Cursos")) ?? []
-  }
-
-  function removeItem(iditem) {
-    const storage = getAll()
-    storage.splice(iditem, 1)
-    window.localStorage.setItem("Cursos", JSON.stringify(storage))
-  }
 
   return (
     <>
-      <Pagina titulo="Cursos" title="QaSchool">
-        <Link className="btn btn-primary mb-3" href="/cursos/form">Cadastrar curso</Link>
+      <Pagina titulo="Disciplinas" title="QaSchool">
+        <Link className="btn btn-primary mb-3" href="/disciplinas/form">Cadastrar curso</Link>
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -38,7 +27,7 @@ export default function Home() {
           </thead>
           <tbody>
             {
-              cursos.map((item, index) => (
+              disciplinas.map((item, index) => (
                 <tr key={index}>
                   <td className="d-flex">
                     <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Remover curso</Tooltip>}>
@@ -48,7 +37,7 @@ export default function Home() {
                     </OverlayTrigger>
                     <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Editar curso</Tooltip>}>
                       <span className="d-inline-block">
-                        <Link href={`/cursos/${index}`}>
+                        <Link href={`/disciplinas/${index}`}>
                           <CgPen size={16}/>
                         </Link>
                       </span>

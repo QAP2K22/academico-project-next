@@ -42,7 +42,7 @@ const dynamicNavBar = {
     },
     {
       type: "simple",
-      text: "Semestres",
+      text: "Semestes",
       href: "/semestres"
     },
   ]
