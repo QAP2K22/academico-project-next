@@ -8,6 +8,10 @@ export default function Home() {
   const [cursos, setCursos] = useState([])
 
   useEffect(() => {
+    axios.get("/api/disciplinas").then(result => (
+      setCursos(result.data)
+
+    ))
     setCursos(getAll())
   }, [])
 
@@ -49,7 +53,7 @@ export default function Home() {
                     <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Editar curso</Tooltip>}>
                       <span className="d-inline-block">
                         <Link href={`/cursos/${index}`}>
-                          <CgPen size={16}/>
+                          <CgPen size={16} />
                         </Link>
                       </span>
                     </OverlayTrigger>

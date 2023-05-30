@@ -1,4 +1,5 @@
 import Pagina from '@/components/Pagina'
+import axios from 'axios';
 import { useRouter } from 'next/router';
 import React from 'react'
 import { Col, InputGroup, Row } from 'react-bootstrap';
@@ -12,10 +13,12 @@ const form = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     function Enviar(dados) {
-        const cursos = JSON.parse(window.localStorage.getItem("Cursos")) ?? []
+        axios.post("/api/disciplinas/", dados)
+
+        const cursos = JSON.parse(window.localStorage.getItem("Disciplinas")) ?? []
         cursos.push(dados)
-        window.localStorage.setItem("Cursos", JSON.stringify(cursos))
-        push("/cursos")
+        window.localStorage.setItem("Disciplinas", JSON.stringify(cursos))
+        push("/disciplinas")
     }
 
     return (
@@ -31,38 +34,11 @@ const form = () => {
                         </Col>
                         <Col>
                             <Form.Group className="mb-3" controlId="Duracao">
-                                <Form.Label>Duração</Form.Label>
-                                <Form.Control placeholder="Duração do curso" {...register('Duracao')} />
-                            </Form.Group>
-                        </Col>
-
-                        <Col>
-                            <Form.Group className="mb-3" controlId="modalidade">
-                                <Form.Label>Modalidade</Form.Label>
-                                <Form.Select aria-label="Default select example" {...register('Modalidade')}>
-                                    <option value="Presencial">Presencial</option>
-                                    <option value="Remoto">Remoto</option>
-                                    <option value="EAD">EAD</option>
-                                </Form.Select>
+                                <Form.Label>Curso</Form.Label>
+                                <Form.Control placeholder="Duração do curso" {...register('Curso')} />
                             </Form.Group>
                         </Col>
                     </Row>
-
-                    <Form.Group className="mb-3 mt-2" controlId="formGridAddress1">
-                        <Form.Label>Endereço de e-mail</Form.Label>
-                        <InputGroup hasValidation>
-                            <Form.Control type="text" placeholder="qaschool@qaschool.com" required {...register('Email', {
-                                validate: (value) => value.length > 2
-                            })}
-                            />
-
-                            {errors.Email && <Form.Control.Feedback type="invalid">
-                                Você precisa inserir um e-mail válido!
-                            </Form.Control.Feedback>}
-                        </InputGroup>
-
-
-                    </Form.Group>
                     <Button className="btn btn-primary" onClick={handleSubmit(Enviar)}>Enviar</Button>
                 </Form>
             </Pagina>
