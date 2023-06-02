@@ -8,10 +8,6 @@ export default function Home() {
   const [cursos, setCursos] = useState([])
 
   useEffect(() => {
-    axios.get("/api/disciplinas").then(result => (
-      setCursos(result.data)
-
-    ))
     setCursos(getAll())
   }, [])
 

@@ -13,11 +13,7 @@ const form = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     function Enviar(dados) {
-        axios.post("/api/disciplinas/", dados)
-
-        const cursos = JSON.parse(window.localStorage.getItem("Disciplinas")) ?? []
-        cursos.push(dados)
-        window.localStorage.setItem("Disciplinas", JSON.stringify(cursos))
+        axios.post("/api/disciplinas/disciplinas", dados)
         push("/disciplinas")
     }
 
@@ -35,8 +31,12 @@ const form = () => {
                         <Col>
                             <Form.Group className="mb-3" controlId="Duracao">
                                 <Form.Label>Curso</Form.Label>
-                                <Form.Control placeholder="Duração do curso" {...register('Curso')} />
+                                <Form.Control placeholder="Duração do curso" {...register('Curso', { required: true })} />
                             </Form.Group>
+
+                            {errors.Curso && <Form.Control.Feedback type="invalid">
+                                Please provide a valid city.
+                            </Form.Control.Feedback>}
                         </Col>
                     </Row>
                     <Button className="btn btn-primary" onClick={handleSubmit(Enviar)}>Enviar</Button>
