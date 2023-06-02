@@ -6,37 +6,37 @@ import { Button, Modal, OverlayTrigger, Table, Tooltip } from "react-bootstrap";
 import { CgFolderRemove, CgPen } from 'react-icons/cg'
 
 export default function Home() {
-  const [disciplinas, setDisciplinas] = useState([])
+  const [alunos, setAlunos] = useState([])
   const [show, setShow] = useState(false);
   const [dados, setDados] = useState('')
   const [id,setId] = useState('')
   const handleClose = () => setShow(false);
   
   useEffect(() => {
-    getDisciplinas()
+    getAlunos()
   }, [])
 
   function handleSave() {
     setShow(false)
-    axios.delete(`/api/disciplinas/${id}`)
-    getAll()
+    axios.delete(`/api/alunos/${id}`)
+    getAlunos()
   }
 
-  function getDisciplinas() {
-    axios.get("/api/disciplinas/disciplinas").then(result => (
-      setDisciplinas(result.data)
+  function getAlunos() {
+    axios.get("/api/alunos/alunos").then(result => (
+      setAlunos(result.data)
     ))
   }
 
-  function removeItem(itemId, itemId2, itemId3) {
+  function removeItem(itemId, itemId2, itemId3,itemId4) {
     setId(itemId)
-    setDados(`Nome: ${itemId2} | Disciplina: ${itemId3}`)
+    setDados(`Nome: ${itemId2} | CPF: ${itemId3} | Matricula: ${itemId4}`)
     setShow(true)
   }
 
   return (
     <>
-      <Pagina titulo="Disciplinas" title="QaSchool" navBarItem="Initial">
+      <Pagina titulo="Alunos" title="QaSchool" navBarItem="Initial">
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Deseja remover?</Modal.Title>
@@ -51,37 +51,53 @@ export default function Home() {
             </Button>
           </Modal.Footer>
         </Modal>
-        <Link className="btn btn-primary mb-3" href="/disciplinas/form">Cadastrar Disciplina</Link>
+        <Link className="btn btn-primary mb-3" href="/alunos/form">Cadastrar Aluno</Link>
         <Table striped bordered hover>
           <thead>
             <tr>
               <th>
                 <CgFolderRemove />
               </th>
-              <th>Curso</th>
-              <th>Disciplina</th>
+              <th>Nome</th>
+              <th>CPF</th>
+              <th>Matricula</th>
+              <th>Email</th>
+              <th>Telefone</th>
+              <th>CEP</th>
+              <th>Logradouro</th>
+              <th>Complemento</th>
+              <th>Numero</th>
+              <th>Bairro</th>
             </tr>
           </thead>
           <tbody>
             {
-              disciplinas.map((item, index) => (
+              alunos.map((item, index) => (
                 <tr key={item.id}>
                   <td className="d-flex">
-                    <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Remover disciplina</Tooltip>}>
+                    <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Remover aluno</Tooltip>}>
                       <span className="d-inline-block" style={{ marginRight: "10px" }}>
-                        <CgFolderRemove onClick={() => removeItem(item.id, item.Nome, item.Disciplina)} />
+                        <CgFolderRemove onClick={() => removeItem(item.id, item.Nome, item.CPF, item.Matricula)} />
                       </span>
                     </OverlayTrigger>
-                    <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Editar disciplina</Tooltip>}>
+                    <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Editar aluno</Tooltip>}>
                       <span className="d-inline-block">
-                        <Link href={`/disciplinas/${item.id}`}>
+                        <Link href={`/alunos/${item.id}`}>
                           <CgPen size={16} />
                         </Link>
                       </span>
                     </OverlayTrigger>
                   </td>
                   <td>{item.Nome}</td>
-                  <td>{item.Disciplina}</td>
+                  <td>{item.CPF}</td>
+                  <td>{item.Matricula}</td>
+                  <td>{item.Email}</td>
+                  <td>{item.Telefone}</td>
+                  <td>{item.Cep}</td>
+                  <td>{item.Logradouro}</td>
+                  <td>{item.Complemento}</td>
+                  <td>{item.Numero}</td>
+                  <td>{item.Bairro}</td>
                 </tr>
               ))}
 

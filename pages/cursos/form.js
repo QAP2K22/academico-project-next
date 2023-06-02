@@ -2,7 +2,7 @@ import Pagina from '@/components/Pagina'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react'
-import { Col, Container, InputGroup, Row } from 'react-bootstrap';
+import { Col, InputGroup, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
@@ -64,7 +64,8 @@ const form = () => {
 
 
                     </Form.Group>
-                    <Button className="btn btn-primary" onClick={handleSubmit(Enviar)}>Enviar</Button>
+                    <Button variant="outline-success" onClick={handleSubmit(Enviar)}>Salvar</Button>
+                    <Link href="/cursos" className='btn btn-outline-danger mx-2'> voltar</Link>
                 </Form>
             </Pagina>
         </>

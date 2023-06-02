@@ -6,37 +6,37 @@ import { Button, Modal, OverlayTrigger, Table, Tooltip } from "react-bootstrap";
 import { CgFolderRemove, CgPen } from 'react-icons/cg'
 
 export default function Home() {
-  const [disciplinas, setDisciplinas] = useState([])
+  const [semestres, setSemestres] = useState([])
   const [show, setShow] = useState(false);
   const [dados, setDados] = useState('')
   const [id,setId] = useState('')
   const handleClose = () => setShow(false);
-  
+
   useEffect(() => {
-    getDisciplinas()
+    getSemestres()
   }, [])
 
   function handleSave() {
     setShow(false)
-    axios.delete(`/api/disciplinas/${id}`)
-    getAll()
+    axios.delete(`/api/semestres/${id}`)
+    getSemestres()
   }
 
-  function getDisciplinas() {
-    axios.get("/api/disciplinas/disciplinas").then(result => (
-      setDisciplinas(result.data)
+  function getSemestres() {
+    axios.get("/api/semestres/semestres").then(result => (
+      setSemestres(result.data)
     ))
   }
 
-  function removeItem(itemId, itemId2, itemId3) {
+  function removeItem(itemId, itemId2, itemId3,itemId4) {
     setId(itemId)
-    setDados(`Nome: ${itemId2} | Disciplina: ${itemId3}`)
+    setDados(`Nome: ${itemId2} | Início: ${itemId3} | Fim: ${itemId4} `)
     setShow(true)
   }
 
   return (
     <>
-      <Pagina titulo="Disciplinas" title="QaSchool" navBarItem="Initial">
+      <Pagina titulo="Semestres" title="QaSchool" navBarItem="Initial">
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Deseja remover?</Modal.Title>
@@ -51,37 +51,39 @@ export default function Home() {
             </Button>
           </Modal.Footer>
         </Modal>
-        <Link className="btn btn-primary mb-3" href="/disciplinas/form">Cadastrar Disciplina</Link>
+        <Link className="btn btn-primary mb-3" href="/semestres/form">Cadastrar Semestre</Link>
         <Table striped bordered hover>
           <thead>
             <tr>
               <th>
                 <CgFolderRemove />
               </th>
-              <th>Curso</th>
-              <th>Disciplina</th>
+              <th>Nome</th>
+              <th>Data de início</th>
+              <th>Data de fim</th>
             </tr>
           </thead>
           <tbody>
             {
-              disciplinas.map((item, index) => (
+              semestres.map((item, index) => (
                 <tr key={item.id}>
                   <td className="d-flex">
-                    <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Remover disciplina</Tooltip>}>
+                    <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Remover Semestre</Tooltip>}>
                       <span className="d-inline-block" style={{ marginRight: "10px" }}>
-                        <CgFolderRemove onClick={() => removeItem(item.id, item.Nome, item.Disciplina)} />
+                        <CgFolderRemove onClick={() => removeItem(item.id, item.NomeSemestre, item.DataInicio, item.DataFim)} />
                       </span>
                     </OverlayTrigger>
-                    <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Editar disciplina</Tooltip>}>
+                    <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Editar Semestre</Tooltip>}>
                       <span className="d-inline-block">
-                        <Link href={`/disciplinas/${item.id}`}>
+                        <Link href={`/semestres/${item.id}`}>
                           <CgPen size={16} />
                         </Link>
                       </span>
                     </OverlayTrigger>
                   </td>
-                  <td>{item.Nome}</td>
-                  <td>{item.Disciplina}</td>
+                  <td>{item.NomeSemestre}</td>
+                  <td>{item.DataInicio}</td>
+                  <td>{item.DataFim}</td>
                 </tr>
               ))}
 

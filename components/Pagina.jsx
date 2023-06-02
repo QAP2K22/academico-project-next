@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import React from 'react'
-import { Navbar, Container, Nav, NavDropdown, Form, Button, Offcanvas } from "react-bootstrap"
+import qalogo from "../public/qaschool.png"
+import { Navbar, Container, Nav, NavDropdown, Form, Button, Offcanvas, Card } from "react-bootstrap"
 
 
 const dynamicNavBar = {
@@ -78,7 +79,7 @@ const Pagina = (props) => {
 
       <Navbar variant="dark" key={"lg"} className='navBar' expand={"lg"} fixed="top">
         <Container fluid>
-          <Link className="navbar-brand" href={props.navBarLink ?? "/"}>{props.navBarTitle ?? "QASCHOOL"}</Link>
+          <Link className="navbar-brand" href={props.navBarLink ?? "/"}><Card.Img variant="top" src={"https://cdn.discordapp.com/attachments/780615034816036897/1114191462519799899/qaschool.png"} style={{width: 60}} title={"QALOGO"} /></Link>
 
           {dynamicNavBar[props.navBarItem ?? "default"].length > 0 ?
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${"lg"}`} />

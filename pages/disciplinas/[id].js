@@ -17,10 +17,8 @@ const form = () => {
             axios.get(`/api/disciplinas/${query.id}`).then(result => {
                 const disciplinas = result.data
 
-
-                console.log(disciplinas)
                 for (let atributo in disciplinas) {
-                    setValue(atributo,disciplinas[atributo])
+                    setValue(atributo, disciplinas[atributo])
                 }
             })
         }
@@ -28,7 +26,7 @@ const form = () => {
 
 
     function Enviar(dados) {
-        axios.put(`/api/disciplinas/${query.id}`,dados)
+        axios.put(`/api/disciplinas/${query.id}`, dados)
 
         push("/disciplinas")
     }
@@ -38,19 +36,23 @@ const form = () => {
                 <Form onSubmit={handleSubmit(Enviar)}>
                     <Row>
                         <Col>
-                            <Form.Group className="mb-3" controlId="Nome">
+                            <Form.Group className="mb-3" controlId="Curso">
                                 <Form.Label>Nome</Form.Label>
                                 <Form.Control type="text" placeholder="Nome do curso"  {...register('Nome')} />
                             </Form.Group>
                         </Col>
                         <Col>
-                            <Form.Group className="mb-3" controlId="Duracao">
-                                <Form.Label>Curso</Form.Label>
-                                <Form.Control placeholder="Duração do curso" {...register('Curso')} />
+                            <Form.Group className="mb-3" controlId="Disciplina">
+                                <Form.Label>Disciplina</Form.Label>
+                                <Form.Control placeholder="Nome da disciplina" {...register('Disciplina', { required: true })} />
+                                {errors.Disciplina && <Form.Control.Feedback type="invalid">
+                                    Please provide a valid city.
+                                </Form.Control.Feedback>}
                             </Form.Group>
                         </Col>
                     </Row>
-                    <Button className="btn btn-primary" onClick={handleSubmit(Enviar)}>Enviar</Button>
+                    <Button variant="outline-success" onClick={handleSubmit(Enviar)}>Salvar</Button>
+                    <Link href="/disciplinas" className='btn btn-outline-danger mx-2'> voltar</Link>
                 </Form>
             </Pagina>
         </>

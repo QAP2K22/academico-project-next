@@ -15,15 +15,18 @@ export default function Home() {
     return JSON.parse(window.localStorage.getItem("Cursos")) ?? []
   }
 
-  function removeItem(iditem) {
-    const storage = getAll()
-    storage.splice(iditem, 1)
-    window.localStorage.setItem("Cursos", JSON.stringify(storage))
+  function removeItem(iditem,curso) {
+    if (confirm(`Deseja remover o curso ${curso}`)) {
+      const storage = getAll()
+      storage.splice(iditem, 1)
+      window.localStorage.setItem("Cursos", JSON.stringify(storage))
+      setCursos(getAll())
+    }
   }
 
   return (
     <>
-      <Pagina titulo="Cursos" title="QaSchool">
+      <Pagina titulo="Cursos" title="QaSchool" navBarItem="Initial">
         <Link className="btn btn-primary mb-3" href="/cursos/form">Cadastrar curso</Link>
         <Table striped bordered hover>
           <thead>
@@ -43,7 +46,7 @@ export default function Home() {
                   <td className="d-flex">
                     <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Remover curso</Tooltip>}>
                       <span className="d-inline-block" style={{ marginRight: "10px" }}>
-                        <CgFolderRemove onClick={() => removeItem(index)} />
+                        <CgFolderRemove onClick={() => removeItem(index,item.Nome)} />
                       </span>
                     </OverlayTrigger>
                     <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Editar curso</Tooltip>}>

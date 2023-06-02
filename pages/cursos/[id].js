@@ -75,7 +75,8 @@ const form = () => {
 
 
                     </Form.Group>
-                    <Button className="btn btn-primary" onClick={handleSubmit(Enviar)}>Enviar</Button>
+                    <Button variant="outline-success" onClick={handleSubmit(Enviar)}>Salvar</Button>
+                    <Link href="/cursos" className='btn btn-outline-danger mx-2'> voltar</Link>               
                 </Form>
             </Pagina>
         </>
