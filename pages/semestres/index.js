@@ -1,7 +1,8 @@
 import Pagina from "@/components/Pagina";
 import axios from "axios";
 import Link from "next/link";
-import { use, useEffect, useState } from "react";
+import { dateFormatter } from "../../functions/formatter"
+import { useEffect, useState } from "react";
 import { Button, Modal, OverlayTrigger, Table, Tooltip } from "react-bootstrap";
 import { CgFolderRemove, CgPen } from 'react-icons/cg'
 
@@ -9,7 +10,7 @@ export default function Home() {
   const [semestres, setSemestres] = useState([])
   const [show, setShow] = useState(false);
   const [dados, setDados] = useState('')
-  const [id,setId] = useState('')
+  const [id, setId] = useState('')
   const handleClose = () => setShow(false);
 
   useEffect(() => {
@@ -28,7 +29,7 @@ export default function Home() {
     ))
   }
 
-  function removeItem(itemId, itemId2, itemId3,itemId4) {
+  function removeItem(itemId, itemId2, itemId3, itemId4) {
     setId(itemId)
     setDados(`Nome: ${itemId2} | Início: ${itemId3} | Fim: ${itemId4} `)
     setShow(true)
@@ -58,7 +59,8 @@ export default function Home() {
               <th>
                 <CgFolderRemove />
               </th>
-              <th>Nome</th>
+              <th>Semestre</th>
+              <th>Disciplinas</th>
               <th>Data de início</th>
               <th>Data de fim</th>
             </tr>
@@ -82,8 +84,9 @@ export default function Home() {
                     </OverlayTrigger>
                   </td>
                   <td>{item.NomeSemestre}</td>
-                  <td>{item.DataInicio}</td>
-                  <td>{item.DataFim}</td>
+                  <td>{item.NomeDisciplina}</td>
+                  <td>{dateFormatter(item.DataInicio)}</td>
+                  <td>{dateFormatter(item.DataFim)}</td>
                 </tr>
               ))}
 

@@ -1,11 +1,12 @@
 import Pagina from '@/components/Pagina'
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import errosData from '@/functions/validator';
+import React from 'react'
 import { useRouter } from 'next/router';
-import { Col, Row } from 'react-bootstrap';
+import { Col, InputGroup, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 
 const form = () => {
@@ -21,45 +22,45 @@ const form = () => {
     return (
         <>
             <Pagina titulo="Professores" title="QaSchool" navBarLink="/professores">
-                <Form onSubmit={handleSubmit(Enviar)}>
+                <Form noValidate onSubmit={handleSubmit(Enviar)}>
                     <Row>
                         <Col>
                             <Form.Group className="mb-3" controlId="Nome">
                                 <Form.Label>Nome</Form.Label>
-                                <Form.Control placeholder="Nome do professor" {...register('Nome', { required: true })} />
+                                <Form.Control isInvalid={errors.Nome} placeholder="Nome do professor" {...register('Nome', errosData["Professores"]["Nome"])} />
 
                                 {errors.Nome && <Form.Control.Feedback type="invalid">
-                                    Please provide a valid city.
+                                    {errors.Nome?.message}
                                 </Form.Control.Feedback>}
                             </Form.Group>
                         </Col>
                         <Col>
-                            <Form.Group className="mb-3" controlId="Cpf">
-                                <Form.Label>Cpf</Form.Label>
-                                <Form.Control placeholder="CPF do professor" {...register('CPF', { required: true })} />
+                            <Form.Group className="mb-3" controlId="CPF">
+                                <Form.Label>CPF</Form.Label>
+                                <Form.Control isInvalid={errors.CPF} placeholder="CPF do professor" {...register('CPF', errosData["Professores"]["CPF"])} />
 
-                                {errors.Cpf && <Form.Control.Feedback type="invalid">
-                                    Please provide a valid city.
+                                {errors.CPF && <Form.Control.Feedback type="invalid">
+                                    {errors.CPF?.message}
                                 </Form.Control.Feedback>}
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group className="mb-3" controlId="Matricula">
                                 <Form.Label>Matricula</Form.Label>
-                                <Form.Control placeholder="Matricula do professor" {...register('Matricula', { required: true })} />
+                                <Form.Control isInvalid={errors.Matricula} placeholder="Matricula do professor" {...register('Matricula', errosData["Professores"]["Matricula"])} />
 
                                 {errors.Matricula && <Form.Control.Feedback type="invalid">
-                                    Please provide a valid city.
+                                    {errors.Matricula?.message}
                                 </Form.Control.Feedback>}
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group className="mb-3" controlId="Salario">
                                 <Form.Label>Salario</Form.Label>
-                                <Form.Control placeholder="Salario do professor" {...register('Salario', { required: true })} />
+                                <Form.Control isInvalid={errors.Salario} placeholder="Salario do professor" {...register('Salario', errosData["Professores"]["Salario"])} />
 
                                 {errors.Salario && <Form.Control.Feedback type="invalid">
-                                    Please provide a valid city.
+                                    {errors.Salario?.message}
                                 </Form.Control.Feedback>}
                             </Form.Group>
                         </Col>
@@ -68,20 +69,24 @@ const form = () => {
                         <Col>
                             <Form.Group className="mb-3" controlId="Email">
                                 <Form.Label>Email</Form.Label>
-                                <Form.Control placeholder="Email do professor" {...register('Email', { required: true })} />
+                                <InputGroup hasValidation>
 
-                                {errors.Email && <Form.Control.Feedback type="invalid">
-                                    Please provide a valid city.
-                                </Form.Control.Feedback>}
+                                    <Form.Control isInvalid={errors.Email} placeholder="Email do professor" aria-describedby="inputGroupPrepend" {...register('Email', errosData["Professores"]["Email"])} />
+{/*                                     <InputGroup.Text id="inputGroupPrepend">@QaSchool.com</InputGroup.Text>
+ */}                                    {errors.Email && <Form.Control.Feedback type="invalid">
+                                        {errors.Email?.message}
+                                    </Form.Control.Feedback>}
+                                </InputGroup>
+
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group className="mb-3" controlId="Telefone">
                                 <Form.Label>Telefone</Form.Label>
-                                <Form.Control placeholder="Telefone do professor" {...register('Telefone', { required: true })} />
+                                <Form.Control isInvalid={errors.Telefone} placeholder="Telefone do professor" {...register('Telefone', errosData["Professores"]["Telefone"])} />
 
                                 {errors.Telefone && <Form.Control.Feedback type="invalid">
-                                    Please provide a valid city.
+                                    {errors.Telefone?.message}
                                 </Form.Control.Feedback>}
                             </Form.Group>
                         </Col>
@@ -90,20 +95,20 @@ const form = () => {
                         <Col>
                             <Form.Group className="mb-3" controlId="Cep">
                                 <Form.Label>Cep</Form.Label>
-                                <Form.Control placeholder="Cep do professor" {...register('Cep', { required: true })} />
+                                <Form.Control isInvalid={errors.Cep} placeholder="Cep do professor" {...register('Cep', errosData["Professores"]["Cep"])} />
 
                                 {errors.Cep && <Form.Control.Feedback type="invalid">
-                                    Please provide a valid city.
+                                    {errors.Cep?.message}
                                 </Form.Control.Feedback>}
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group className="mb-3" controlId="Logradouro">
                                 <Form.Label>Logradouro</Form.Label>
-                                <Form.Control placeholder="Logradouro do professor" {...register('Logradouro', { required: true })} />
+                                <Form.Control isInvalid={errors.Logradouro} placeholder="Logradouro" {...register('Logradouro', errosData["Professores"]["Logradouro"])} />
 
                                 {errors.Logradouro && <Form.Control.Feedback type="invalid">
-                                    Please provide a valid city.
+                                    {errors.Logradouro?.message}
                                 </Form.Control.Feedback>}
                             </Form.Group>
                         </Col>
@@ -112,30 +117,30 @@ const form = () => {
                         <Col>
                             <Form.Group className="mb-3" controlId="Complemento">
                                 <Form.Label>Complemento</Form.Label>
-                                <Form.Control placeholder="Complemento do professor" {...register('Complemento', { required: true })} />
+                                <Form.Control isInvalid={errors.Complemento} placeholder="Complemento" {...register('Complemento', errosData["Professores"]["Complemento"])} />
 
                                 {errors.Complemento && <Form.Control.Feedback type="invalid">
-                                    Please provide a valid city.
+                                    {errors.Complemento?.message}
                                 </Form.Control.Feedback>}
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group className="mb-3" controlId="Numero">
                                 <Form.Label>Numero</Form.Label>
-                                <Form.Control placeholder="Numero do professor" {...register('Numero', { required: true })} />
+                                <Form.Control isInvalid={errors.Numero} placeholder="Numero" {...register('Numero', errosData["Professores"]["Numero"])} />
 
                                 {errors.Numero && <Form.Control.Feedback type="invalid">
-                                    Please provide a valid city.
+                                    {errors.Numero?.message}
                                 </Form.Control.Feedback>}
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group className="mb-3" controlId="Bairro">
                                 <Form.Label>Bairro</Form.Label>
-                                <Form.Control placeholder="Bairro do professor" {...register('Bairro', { required: true })} />
+                                <Form.Control isInvalid={errors.Bairro} placeholder="Bairro" {...register('Bairro', errosData["Professores"]["Bairro"])} />
 
                                 {errors.Bairro && <Form.Control.Feedback type="invalid">
-                                    Please provide a valid city.
+                                    {errors.Bairro?.message}
                                 </Form.Control.Feedback>}
                             </Form.Group>
                         </Col>

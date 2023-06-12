@@ -1,18 +1,21 @@
 import Pagina from '@/components/Pagina'
 import axios from 'axios';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react'
-import { Col, InputGroup, Row } from 'react-bootstrap';
+import React from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { Col, Row } from 'react-bootstrap';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import errosData from '@/functions/validator';
+
+
 
 const form = () => {
 
     const { push } = useRouter()
     const { register, handleSubmit, formState: { errors } } = useForm();
-  
+
     function Enviar(dados) {
         axios.post("/api/salas/salas", dados)
         push("/salas")
@@ -21,23 +24,23 @@ const form = () => {
     return (
         <>
             <Pagina titulo="Salas" title="QaSchool" navBarLink="/salas">
-                <Form onSubmit={handleSubmit(Enviar)}>
+                <Form noValidate onSubmit={handleSubmit(Enviar)}>
                     <Row>
                         <Col>
-                            <Form.Group className="mb-3" controlId="NomeSala">
+                            <Form.Group className="mb-3" controlId="Nome">
                                 <Form.Label>Nome</Form.Label>
-                                <Form.Control type="text" placeholder="Nome da sala"  {...register('Nome', { required: true })} />
-                                {errors.NomeSala && <Form.Control.Feedback type="invalid">
-                                    Please provide a valid city.
+                                <Form.Control isInvalid={errors.Nome} type="text" placeholder="Nome da sala"  {...register('Nome', errosData["Salas"]["Nome"])} />
+                                {errors.Nome && <Form.Control.Feedback type="invalid">
+                                    {errors.Nome?.message}
                                 </Form.Control.Feedback>}
                             </Form.Group>
                         </Col>
                         <Col>
-                            <Form.Group className="mb-3" controlId="Capacidade">
+                            <Form.Group className="mb-3" controlId="CapacidadeSala">
                                 <Form.Label>Capacidade de alunos</Form.Label>
-                                <Form.Control placeholder="Capacidade de alunos" {...register('CapacidadeSala', { required: true })} />
-                                {errors.Capacidade && <Form.Control.Feedback type="invalid">
-                                    Please provide a valid city.
+                                <Form.Control type="number" isInvalid={errors.CapacidadeSala} placeholder="Capacidade de alunos" {...register('CapacidadeSala', errosData["Salas"]["Capacidade"])} />
+                                {errors.CapacidadeSala && <Form.Control.Feedback type="invalid">
+                                    {errors.CapacidadeSala?.message}
                                 </Form.Control.Feedback>}
                             </Form.Group>
                         </Col>

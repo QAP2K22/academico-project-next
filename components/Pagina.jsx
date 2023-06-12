@@ -33,11 +33,6 @@ const dynamicNavBar = {
     },
     {
       type: "simple",
-      text: "Turmas",
-      href: "/turmas"
-    },
-    {
-      type: "simple",
       text: "Salas",
       href: "/salas"
     },

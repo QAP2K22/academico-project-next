@@ -1,16 +1,21 @@
 import Pagina from '@/components/Pagina'
 import axios from 'axios';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React, { useEffect } from 'react'
-import { Col, Container, InputGroup, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import React, { useEffect, useState } from 'react'
+import { Col, Row } from 'react-bootstrap';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 
 const form = () => {
     const { push, query } = useRouter()
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+    const [disciplinas, setDisciplinas] = useState([])
+
+    useEffect(() => {
+        getDisciplinas()
+    }, [])
 
     useEffect(() => {
         if (query.id) {
@@ -24,6 +29,11 @@ const form = () => {
         }
     }, [query.id])
 
+    function getDisciplinas() {
+        axios.get("/api/disciplinas/disciplinas").then(result => (
+            setDisciplinas(result.data)
+        ))
+    }
 
     function Enviar(dados) {
         axios.put(`/api/semestres/${query.id}`, dados)
@@ -33,11 +43,11 @@ const form = () => {
     return (
         <>
             <Pagina titulo="Semestres" title="QaSchool" navBarLink="/semestres">
-                <Form onSubmit={handleSubmit(Enviar)}>
+                <Form noValidate onSubmit={handleSubmit(Enviar)}>
                     <Row>
                         <Col>
                             <Form.Group className="mb-3" controlId="NomeSemestre">
-                                <Form.Label>Tipo de sala</Form.Label>
+                                <Form.Label>Semestre</Form.Label>
                                 <Form.Select aria-label="Não definido" {...register('NomeSemestre')}>
                                     <option value="1º Semestre">1º Semestre</option>
                                     <option value="2° Semestre">2° Semestre</option>
@@ -45,20 +55,34 @@ const form = () => {
                             </Form.Group>
                         </Col>
                         <Col>
+                            <Form.Group className="mb-3" controlId="NomeDisciplina">
+                                <Form.Label>Disciplina</Form.Label>
+                                <Form.Select aria-label="Default select example" {...register('NomeDisciplina')}>
+                                    {Object.keys(disciplinas).length === 0 ?
+                                        <option>Disciplinas não cadastradas.</option>
+                                        :
+                                        disciplinas.map(item => (
+                                            <option value={item.Nome}>{item.Nome}</option>
+                                        ))
+                                    }
+                                </Form.Select>
+                            </Form.Group>
+                        </Col>
+                        <Col>
                             <Form.Group className="mb-3" controlId="DataInicio">
                                 <Form.Label>Data de início</Form.Label>
-                                <Form.Control placeholder="Início do semestre" type="date" {...register('DataInicio', { required: true })} />
+                                <Form.Control isInvalid={errors.DataInicio} placeholder="Início do semestre" type="date" {...register('DataInicio', { required: true })} />
                                 {errors.DataInicio && <Form.Control.Feedback type="invalid">
-                                    Please provide a valid city.
+                                    Escolha uma data válida
                                 </Form.Control.Feedback>}
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group className="mb-3" controlId="DataFim">
                                 <Form.Label>Fim de início</Form.Label>
-                                <Form.Control placeholder="Fim do semestre" type="date" {...register('DataFim', { required: true })} />
-                                {errors.DataFim && <Form.Control.Feedback type="invalid">
-                                    Please provide a valid city.
+                                <Form.Control isInvalid={errors.DataFim} placeholder="Fim do semestre" type="date" {...register('DataFim', { required: true })} />
+                                {errors.DataInicio && <Form.Control.Feedback type="invalid">
+                                    Escolha uma data válida
                                 </Form.Control.Feedback>}
                             </Form.Group>
                         </Col>

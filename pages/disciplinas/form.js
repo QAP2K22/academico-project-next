@@ -1,18 +1,19 @@
 import Pagina from '@/components/Pagina'
+import errosData from '@/functions/validator';
 import axios from 'axios';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react'
-import { Col, InputGroup, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import React, { useEffect, useState } from 'react'
+import { Col, Row } from 'react-bootstrap';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 
 const form = () => {
 
     const { push } = useRouter()
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const [ disciplinas, setDisciplinas] = useState([])
+    const [disciplinas, setDisciplinas] = useState([])
 
 
     useEffect(() => {
@@ -50,10 +51,10 @@ const form = () => {
                         <Col>
                             <Form.Group className="mb-3" controlId="Disciplina">
                                 <Form.Label>Disciplina</Form.Label>
-                                <Form.Control placeholder="Nome da disciplina" {...register('Disciplina', { required: true })} />
+                                <Form.Control isInvalid={errors.Disciplina} placeholder="Nome da disciplina" {...register('Disciplina', errosData["Disciplinas"]["Nome"])} />
 
                                 {errors.Disciplina && <Form.Control.Feedback type="invalid">
-                                    Please provide a valid city.
+                                    {errors.Disciplina?.message}
                                 </Form.Control.Feedback>}
                             </Form.Group>
                         </Col>
