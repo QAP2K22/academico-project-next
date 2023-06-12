@@ -45,8 +45,8 @@ const errosData = {
         },
         "CPF": { 
             required: "Insira um número válido!", 
-            pattern: { value: /[0-9]{11}/, message: "O CPF precisa conter 8 números!" },
-            maxLength: { value: 11, message: "O CPF precisa ter no máximo 8 números!" },
+            minLength: { value: 14, message: "O CPF precisa ter no mínimo 8 números!" },
+            maxLength: { value: 14, message: "O CPF precisa ter no máximo 8 números!" },
         },
         "Matricula": { 
             required: "Insira uma matrícula válida!", 

@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import errosData from '@/functions/validator';
 import React from 'react'
+import { mask } from 'remask';
 import { useRouter } from 'next/router';
 import { Col, InputGroup, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -12,11 +13,18 @@ import { useForm } from 'react-hook-form';
 const form = () => {
 
     const { push } = useRouter()
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
 
     function Enviar(dados) {
         axios.post("/api/professores/professores", dados)
         push("/professores")
+    }
+
+    function handleChange(event) {
+        const name = event.target.name 
+        const valor = event.target.value
+        const mascara = event.target.getAttribute("mask3")
+        setValue(name, mask(valor, mascara))
     }
 
     return (
@@ -37,7 +45,7 @@ const form = () => {
                         <Col>
                             <Form.Group className="mb-3" controlId="CPF">
                                 <Form.Label>CPF</Form.Label>
-                                <Form.Control isInvalid={errors.CPF} placeholder="CPF do professor" {...register('CPF', errosData["Professores"]["CPF"])} />
+                                <Form.Control mask3="999.999.999-99" maxLength={14} isInvalid={errors.CPF} placeholder="CPF do professor" {...register('CPF', errosData["Professores"]["CPF"])} onChange={(e) => handleChange(e)} />
 
                                 {errors.CPF && <Form.Control.Feedback type="invalid">
                                     {errors.CPF?.message}
