@@ -5,10 +5,10 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import errosData from '@/functions/validator';
 import React from 'react'
-import { mask } from 'remask';
 import { useRouter } from 'next/router';
 import { Col, InputGroup, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
+import { mask } from 'remask'
 
 const form = () => {
 
@@ -23,7 +23,7 @@ const form = () => {
     function handleChange(event) {
         const name = event.target.name 
         const valor = event.target.value
-        const mascara = event.target.getAttribute("mask3")
+        const mascara = event.target.getAttribute("mask")
         setValue(name, mask(valor, mascara))
     }
 
@@ -45,7 +45,7 @@ const form = () => {
                         <Col>
                             <Form.Group className="mb-3" controlId="CPF">
                                 <Form.Label>CPF</Form.Label>
-                                <Form.Control mask3="999.999.999-99" maxLength={14} isInvalid={errors.CPF} placeholder="CPF do professor" {...register('CPF', errosData["Professores"]["CPF"])} onChange={(e) => handleChange(e)} />
+                                <Form.Control mask="999.999.999-99" maxLength={14} isInvalid={errors.CPF} placeholder="CPF do professor" {...register('CPF', errosData["Professores"]["CPF"])} onChange={(e) => handleChange(e)}/>
 
                                 {errors.CPF && <Form.Control.Feedback type="invalid">
                                     {errors.CPF?.message}
@@ -91,7 +91,7 @@ const form = () => {
                         <Col>
                             <Form.Group className="mb-3" controlId="Telefone">
                                 <Form.Label>Telefone</Form.Label>
-                                <Form.Control isInvalid={errors.Telefone} placeholder="Telefone do professor" {...register('Telefone', errosData["Professores"]["Telefone"])} />
+                                <Form.Control mask="(99) 9 9999-9999" maxLength={19} isInvalid={errors.Telefone} placeholder="Telefone do professor" {...register('Telefone', errosData["Professores"]["Telefone"])} onChange={(e) => handleChange(e)} />
 
                                 {errors.Telefone && <Form.Control.Feedback type="invalid">
                                     {errors.Telefone?.message}
@@ -103,7 +103,7 @@ const form = () => {
                         <Col>
                             <Form.Group className="mb-3" controlId="Cep">
                                 <Form.Label>Cep</Form.Label>
-                                <Form.Control isInvalid={errors.Cep} placeholder="Cep do professor" {...register('Cep', errosData["Professores"]["Cep"])} />
+                                <Form.Control mask="99999-999" maxLength={9} isInvalid={errors.Cep} placeholder="Cep do professor" {...register('Cep', errosData["Professores"]["Cep"])} onChange={(e) => handleChange(e)}/>
 
                                 {errors.Cep && <Form.Control.Feedback type="invalid">
                                     {errors.Cep?.message}

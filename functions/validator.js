@@ -45,8 +45,8 @@ const errosData = {
         },
         "CPF": { 
             required: "Insira um número válido!", 
-            minLength: { value: 14, message: "O CPF precisa ter no mínimo 8 números!" },
-            maxLength: { value: 14, message: "O CPF precisa ter no máximo 8 números!" },
+            minLength: { value: 14, message: "O CPF precisa ter no minimo 14 números!" },
+            maxLength: { value: 15, message: "O CPF precisa ter no máximo 8 números!" },
         },
         "Matricula": { 
             required: "Insira uma matrícula válida!", 
@@ -65,14 +65,14 @@ const errosData = {
         "Telefone": { 
             required: "Insira um número válido!", 
             pattern: { value: /[0-9]/, message: "Insira somente números." },
-            maxLength: { value: 11, message: "Máximo de 11 números!" },
+            maxLength: { value: 20, message: "Máximo de 20 números!" },
             minLength: { value: 11, message: "Mínimo de 11 números!" },
         },
         "Cep": { 
             required: "Insira um número válido!", 
             pattern: { value: /[0-9]/, message: "Insira somente números." },
             maxLength: { value: 11, message: "Máximo de 11 números!" },
-            minLength: { value: 11, message: "Mínimo de 11 números!" },
+            minLength: { value: 8, message: "Mínimo de 8 números!" },
         },
         "Numero": { 
             required: "Insira um número válido!", 
@@ -82,7 +82,7 @@ const errosData = {
         },
         "Logradouro": { 
             required: "Insira um logradouro válido!", 
-            minLength: { value: 3, message: "O logradouro precisa ter no mínimo 3 letras!" },
+            minLength: { value: 1, message: "O logradouro precisa ter no mínimo 1 letras!" },
             pattern: { value: /^[A-Za-z]+$/i, message: "Você precisa usar somente letras!" } 
         },
         "Complemento": { 
